@@ -20,7 +20,7 @@ Build with cmake:
 
 To run:
 
-    $ ./build/nvprom-exporter
+    $ ./build/nvml-exporter
 
 ## Configuring Prometheus
 
