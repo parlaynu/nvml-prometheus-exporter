@@ -1,10 +1,38 @@
 cmake_minimum_required(VERSION 3.25.1)
 include(FetchContent)
 
-project(nvml-exporter)
+project(nvml-prometheus-exporter)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 23)
+
+add_executable(${PROJECT_NAME}
+    src/main.cpp
+    src/nvgpu.cpp
+)
+
+set(LINK_LIBS
+    prometheus-cpp::pull
+    CUDA::nvml
+) 
+if (WIN32)
+  list(APPEND LINK_LIBS ws2_32) 
+endif()
+
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+    ${LINK_LIBS}
+)
+
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE
+    PROJECT_NAME="${CMAKE_PROJECT_NAME}"
+)
+
+install(TARGETS ${PROJECT_NAME}
+  DESTINATION ${PROJECT_NAME}
+  RUNTIME_DEPENDENCIES 
+)
 
 FetchContent_Declare(prometheus-cpp
     GIT_REPOSITORY https://github.com/jupp0r/prometheus-cpp.git
@@ -13,15 +41,4 @@ FetchContent_Declare(prometheus-cpp
 FetchContent_MakeAvailable(prometheus-cpp)
 
 find_package(CUDAToolkit REQUIRED)
-
-add_executable(${PROJECT_NAME}
-    src/main.cpp
-    src/nvgpu.cpp
-)
-target_link_libraries(${PROJECT_NAME}
-    PRIVATE
-    prometheus-cpp::pull
-    CUDA::nvml
-)
-
 

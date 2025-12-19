@@ -15,10 +15,30 @@ using prometheus::Exposer;
 using prometheus::Registry;
 using prometheus::BuildGauge;
 
-int main() {
+int main(int argc, char* argv[]) {
+
+    std::string address("0.0.0.0:11011");
+    auto usage = [address]() {
+        std::cerr << "Usage: " << PROJECT_NAME << " [options]" << std::endl;
+        std::cerr << "Options: " << std::endl;
+        std::cerr << "   -h                  print this help" << std::endl;
+        std::cerr << "   -l <address:port>   listen address and port (default: " << address << ")" << std::endl;
+        std::exit(1);
+    };
+
+    if (argc != 1 && argc != 3) {
+        usage();
+    }
+    if (argc == 3) {
+        if (std::string("-l") != argv[1]) {
+            usage();
+        }
+        address = argv[2];
+    }
+    std::cerr << "Listening at: http://" << address << "/metrics" << std::endl;
 
     // create a http server to expose the metrics to prometheus
-    Exposer exposer{"0.0.0.0:8080"};
+    Exposer exposer(address);
 
     // create registry
     auto registry = std::make_shared<Registry>();
