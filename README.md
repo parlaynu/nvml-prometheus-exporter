@@ -37,4 +37,4 @@ as above.
 On Linux, I just start it with a boot time cron for root. Will probably create a systemd
 service file for it one day.
 
-On Windows, I use (nssm)[https://nssm.cc/].
+On Windows, I use [nssm](https://nssm.cc/).
