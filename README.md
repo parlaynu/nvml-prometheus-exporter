@@ -15,7 +15,7 @@ Build with cmake:
 
 To run:
 
-    $ ./install/nvml-prometheus-exporter/nvml-prometheus-exporter [-l <address:port>]
+    $ ./install/bin/nvml-prometheus-exporter [-l <address:port>]
 
 The default listen address and port are: `0.0.0.0:11011`
 

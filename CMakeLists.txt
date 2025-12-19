@@ -30,9 +30,11 @@ target_compile_definitions(${PROJECT_NAME}
 )
 
 install(TARGETS ${PROJECT_NAME}
-  DESTINATION ${PROJECT_NAME}
+  DESTINATION bin
   RUNTIME_DEPENDENCIES 
 )
+
+find_package(CUDAToolkit REQUIRED)
 
 set(ENABLE_PUSH OFF)
 set(ENABLE_TESTING OFF)
@@ -41,7 +43,4 @@ FetchContent_Declare(prometheus-cpp
     GIT_TAG v1.3.0
 )
 FetchContent_MakeAvailable(prometheus-cpp)
-
-
-find_package(CUDAToolkit REQUIRED)
 
