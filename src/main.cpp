@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
     for (;;) {
         for (auto& gpu: gpus) {
             if (gpu->tick() == false) {
-                std::cout << "  ** scrape failed **" << std::endl;
+                std::cerr << "Error: failed to collect metrics for GPU " << gpu->uuid() << std::endl;
                 continue;
             }
         }
