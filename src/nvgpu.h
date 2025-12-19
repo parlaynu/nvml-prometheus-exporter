@@ -13,11 +13,11 @@
 
 class NvGPU {
 public:
-    explicit NvGPU(uint32_t index, 
-                    prometheus::Family<prometheus::Gauge>& utilization,
-                    prometheus::Family<prometheus::Gauge>& memory,
-                    prometheus::Family<prometheus::Gauge>& power,
-                    prometheus::Family<prometheus::Gauge>& temperature);
+    NvGPU(uint32_t index, 
+            prometheus::Family<prometheus::Gauge>& utilization,
+            prometheus::Family<prometheus::Gauge>& memory,
+            prometheus::Family<prometheus::Gauge>& power,
+            prometheus::Family<prometheus::Gauge>& temperature);
     ~NvGPU();
 
     uint32_t index() const { return m_index; }
