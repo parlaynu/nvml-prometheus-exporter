@@ -29,10 +29,20 @@ target_compile_definitions(${PROJECT_NAME}
     PROJECT_NAME="${CMAKE_PROJECT_NAME}"
 )
 
-install(TARGETS ${PROJECT_NAME}
-  DESTINATION bin
-  RUNTIME_DEPENDENCIES 
-)
+if (WIN32)
+    install(TARGETS ${PROJECT_NAME}
+        DESTINATION bin
+        RUNTIME_DEPENDENCIES
+        PRE_EXCLUDE_REGEXES "api-ms-"
+                            "ext-ms-"
+                            "opengl32"
+        POST_EXCLUDE_REGEXES ".*system32/.*\\.dll"
+        DIRECTORIES $ENV{PATH})
+else()
+    install(TARGETS ${PROJECT_NAME}
+        DESTINATION bin
+        RUNTIME_DEPENDENCIES)
+endif()
 
 find_package(CUDAToolkit REQUIRED)
 
@@ -41,6 +51,7 @@ set(ENABLE_TESTING OFF)
 FetchContent_Declare(prometheus-cpp
     GIT_REPOSITORY https://github.com/jupp0r/prometheus-cpp.git
     GIT_TAG v1.3.0
+    EXCLUDE_FROM_ALL
 )
 FetchContent_MakeAvailable(prometheus-cpp)
 

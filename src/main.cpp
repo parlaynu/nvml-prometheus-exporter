@@ -3,7 +3,8 @@
 #include <prometheus/exposer.h>
 #include <prometheus/registry.h>
 #include <prometheus/family.h>
-// #include <prometheus/info.h>
+#include <prometheus/gauge.h>
+#include <prometheus/info.h>
 
 #include <chrono>
 #include <thread>
